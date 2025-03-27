@@ -1,13 +1,14 @@
 package site.fridaywords.service;
 
-import site.fridaywords.model.Unit;
+import site.fridaywords.dto.UnitRequestDto;
+import site.fridaywords.dto.UnitResponseDto;
 import java.util.List;
 
 public interface UnitService {
-    List<Unit> getAllUnits();
-    List<Unit> getUnitsByLevelId(Long levelId);
-    Unit getUnitById(Long id);
-    Unit createUnit(Unit unit);
-    Unit updateUnit(Long id, Unit unit);
+    List<UnitResponseDto> getAllUnits();
+    List<UnitResponseDto> getUnitsByLevelId(Long levelId);
+    UnitResponseDto getUnitById(Long id);
+    UnitResponseDto createUnit(UnitRequestDto unitDto);
+    UnitResponseDto updateUnit(Long id, UnitRequestDto unitDto);
     void deleteUnit(Long id);
 } 

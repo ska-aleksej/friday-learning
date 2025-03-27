@@ -1,13 +1,14 @@
 package site.fridaywords.service;
 
-import site.fridaywords.model.Level;
+import site.fridaywords.dto.LevelRequestDto;
+import site.fridaywords.dto.LevelResponseDto;
 import java.util.List;
 
 public interface LevelService {
-    List<Level> getAllLevels();
-    Level getLevelById(Long id);
-    Level getLevelByName(String name);
-    Level createLevel(Level level);
-    Level updateLevel(Long id, Level level);
+    List<LevelResponseDto> getAllLevels();
+    LevelResponseDto getLevelById(Long id);
+    LevelResponseDto getLevelByName(String name);
+    LevelResponseDto createLevel(LevelRequestDto levelDto);
+    LevelResponseDto updateLevel(Long id, LevelRequestDto levelDto);
     void deleteLevel(Long id);
 } 
