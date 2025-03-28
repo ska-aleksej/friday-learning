@@ -4,8 +4,8 @@ CREATE TABLE levels (
     name VARCHAR(2) NOT NULL UNIQUE,  -- A1, A2, PI, B1, B2, C1, C2
     description VARCHAR(500),
     display_order INT NOT NULL,       -- для правильного порядка отображения
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
 );
 
 -- Таблица разделов (юнитов)
@@ -15,8 +15,8 @@ CREATE TABLE units (
     name VARCHAR(100) NOT NULL,
     description VARCHAR(500),
     display_order INT NOT NULL,       -- для порядка отображения внутри уровня
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
     FOREIGN KEY (level_id) REFERENCES levels(id)
 );
 
@@ -28,8 +28,8 @@ CREATE TABLE words (
     russian_translation VARCHAR(100) NOT NULL,
     transcription VARCHAR(100),
     example_sentence VARCHAR(500),    -- пример использования
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
     FOREIGN KEY (unit_id) REFERENCES units(id)
 );
 
