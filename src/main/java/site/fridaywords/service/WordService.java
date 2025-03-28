@@ -12,4 +12,5 @@ public interface WordService {
     WordResponseDto createWord(WordRequestDto wordDto);
     WordResponseDto updateWord(Long id, WordRequestDto wordDto);
     void deleteWord(Long id);
+    List<WordResponseDto> getRandomWordsByUnitId(Long unitId, int count);
 } 

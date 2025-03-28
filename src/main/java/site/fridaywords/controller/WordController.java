@@ -59,4 +59,11 @@ public class WordController {
         wordService.deleteWord(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/unit/{unitId}/random")
+    public ResponseEntity<List<WordResponseDto>> getRandomWords(
+            @PathVariable Long unitId,
+            @RequestParam(defaultValue = "5") int count) {
+        return ResponseEntity.ok(wordService.getRandomWordsByUnitId(unitId, count));
+    }
 } 

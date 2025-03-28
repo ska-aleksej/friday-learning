@@ -14,7 +14,9 @@ import site.fridaywords.service.WordService;
 
 import jakarta.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -97,5 +99,15 @@ public class WordServiceImpl implements WordService {
             throw new EntityNotFoundException("Word not found with id: " + id);
         }
         wordRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<WordResponseDto> getRandomWordsByUnitId(Long unitId, int count) {
+        List<Word> words = wordRepository.findByUnitId(unitId);
+        Collections.shuffle(words);
+        return wordMapper.toDtoList(words.stream()
+                .limit(count)
+                .collect(Collectors.toList()));
     }
 } 

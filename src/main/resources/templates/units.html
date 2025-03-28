@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Level ' + ${level.name} + ' - Choose Unit'">Level A1 - Choose Unit</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← Back to Levels</a>
+        <h1 th:text="'Level ' + ${level.name} + ' Units'">Level A1 Units</h1>
+        <div class="units-grid">
+            <a th:each="unit : ${units}" 
+               th:href="@{/training/{id}(id=${unit.id})}" 
+               class="unit-card">
+                <h2 th:text="${unit.name}">Basic Verbs</h2>
+                <p th:text="${unit.description}">Learn basic verbs</p>
+                <span class="words-count" th:text="${unit.wordsCount + ' words'}">20 words</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Friday Words - Choose Level</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>Choose Your Level</h1>
+        <div class="levels-grid">
+            <a th:each="level : ${levels}" 
+               th:href="@{/level/{id}(id=${level.id})}" 
+               class="level-card">
+                <h2 th:text="${level.name}">A1</h2>
+                <p th:text="${level.description}">Beginner level</p>
+                <span class="units-count" th:text="${level.unitsCount + ' units'}">10 units</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 
