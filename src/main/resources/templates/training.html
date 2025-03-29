@@ -2,33 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${unit.name} + ' - Training'">Unit Training</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Тренировка слов</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
     <div class="container">
-        <a th:href="@{/level/{id}(id=${unit.level.id})}" class="back-link">← Back to Units</a>
-        <h1 th:text="${unit.name}">Unit Name</h1>
+        <h1>Тренировка слов</h1>
         
-        <div class="game-container">
-            <div class="score">Score: <span id="score">0</span></div>
-            
-            <div class="word-pairs">
-                <div class="english-words" id="englishWords"></div>
-                <div class="russian-words" id="russianWords"></div>
-            </div>
+        <!-- Информация о юните -->
+        <div class="unit-info">
+            <h2 th:text="${unit.name}">Название юнита</h2>
+        </div>
 
-            <div class="progress">
-                <div id="progressBar" class="progress-bar"></div>
-            </div>
+        <!-- Контейнер для слов (будет заполняться через JavaScript) -->
+        <div id="wordsContainer" class="words-container"
+             th:data-unit-id="${unit.id}">
+        </div>
+
+        <div class="navigation">
+            <a th:href="@{/units/{levelId}(levelId=${unit.levelId})}" 
+               class="btn btn-secondary">Назад к списку юнитов</a>
         </div>
     </div>
 
-    <script th:inline="javascript">
-        // Передаем данные из Thymeleaf в JavaScript
-        const unitId = [[${unit.id}]];
-    </script>
-    <script th:src="@{/js/speech.js}"></script>
-    <script th:src="@{/js/wordGame.js}"></script>
+    <script th:src="@{/js/training.js}"></script>
 </body>
 </html> 
