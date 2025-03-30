@@ -104,12 +104,22 @@ function handleCardClick(card, word) {
         return;
     }
 
+    // Если выбрана карточка в том же столбце, меняем выделение
+    if (selectedCard && 
+        ((card.parentElement === englishContainer && selectedCard.parentElement === englishContainer) ||
+         (card.parentElement === russianContainer && selectedCard.parentElement === russianContainer))) {
+        selectedCard.classList.remove('selected');
+        selectedCard = card;
+        card.classList.add('selected');
+        return;
+    }
+
     if (!selectedCard) {
         // Первый выбор
         selectedCard = card;
         card.classList.add('selected');
     } else {
-        // Второй выбор
+        // Второй выбор (только если карточки из разных столбцов)
         const isCorrect = checkPair(selectedCard, card, word);
         
         if (isCorrect) {
@@ -121,23 +131,31 @@ function handleCardClick(card, word) {
             correctPairs++;
             updateScore();
             
+            // Через 1 секунду делаем карточки неактивными
+            setTimeout(() => {
+                selectedCard.classList.remove('correct');
+                card.classList.remove('correct');
+                selectedCard.classList.add('disabled');
+                card.classList.add('disabled');
+            }, 1000);
+            
             if (correctPairs === words.length) {
                 setTimeout(() => {
                     loadNewWords();
-                }, 500);
+                }, 1500);
             }
         } else {
             // Неправильная пара
             selectedCard.classList.add('incorrect');
             card.classList.add('incorrect');
             
+            // Снимаем выделение и подсветку через 1 секунду
             setTimeout(() => {
                 selectedCard.classList.remove('selected', 'incorrect');
                 card.classList.remove('incorrect');
+                selectedCard = null;
             }, 1000);
         }
-        
-        selectedCard = null;
     }
 }
 
