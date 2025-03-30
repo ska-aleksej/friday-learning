@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тренировка слов</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
@@ -9,18 +10,25 @@
     <div class="container">
         <h1>Тренировка слов</h1>
         
-        <!-- Информация о юните -->
-        <div class="unit-info">
+        <div class="unit-info" th:data-unit-id="${unit.id}">
             <h2 th:text="${unit.name}">Название юнита</h2>
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            <div class="score" id="score">0/0</div>
         </div>
 
-        <!-- Контейнер для слов (будет заполняться через JavaScript) -->
-        <div id="wordsContainer" class="words-container"
-             th:data-unit-id="${unit.id}">
+        <div class="training-container">
+            <div class="words-column english-column">
+                <div id="englishWords" class="words-list"></div>
+            </div>
+            <div class="words-column russian-column">
+                <div id="russianWords" class="words-list"></div>
+            </div>
         </div>
 
         <div class="navigation">
-            <a th:href="@{/units/{levelId}(levelId=${unit.levelId})}" 
+            <a th:href="@{/level/{levelId}(levelId=${unit.levelId})}" 
                class="btn btn-secondary">Назад к списку юнитов</a>
         </div>
     </div>
