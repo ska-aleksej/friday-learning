@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Запоминание слов</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <a th:href="@{/unit/{id}/modes(id=${unit.id})}" class="back-link">← Назад к выбору режима</a>
+        
+        <div class="unit-info" th:data-unit-id="${unit.id}">
+            <h2 th:text="${unit.name}">Название юнита</h2>
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            <div class="score" id="score">0/0</div>
+        </div>
+
+        <div class="memorization-container">
+            <button class="nav-button prev-button" id="prevButton">←</button>
+            
+            <div class="memorization-card" id="wordCard">
+                <div class="word-english">
+                    <span id="englishWord"></span>
+                    <i class="fas fa-volume-up speak-icon" id="speakWord"></i>
+                </div>
+                <div class="word-transcription" id="transcription"></div>
+                <div class="word-russian" id="russianWord"></div>
+                <div class="word-example">
+                    <span id="example"></span>
+                    <i class="fas fa-volume-up speak-icon" id="speakExample"></i>
+                </div>
+            </div>
+
+            <button class="nav-button next-button" id="nextButton">→</button>
+        </div>
+    </div>
+
+    <script th:src="@{/js/memorization.js}"></script>
+</body>
+</html> 

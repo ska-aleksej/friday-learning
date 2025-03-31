@@ -11,7 +11,7 @@
         <h1 th:text="'Level ' + ${level.name} + ' Units'">Level A1 Units</h1>
         <div class="units-grid">
             <a th:each="unit : ${units}" 
-               th:href="@{/training/{id}(id=${unit.id})}" 
+               th:href="@{/unit/{id}/modes(id=${unit.id})}" 
                class="unit-card">
                 <h2 th:text="${unit.name}">Basic Verbs</h2>
                 <p th:text="${unit.description}">Learn basic verbs</p>

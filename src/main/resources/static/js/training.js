@@ -149,13 +149,13 @@ function handleCardClick(card, word) {
             selectedCard.classList.add('incorrect');
             card.classList.add('incorrect');
             
-            // Снимаем выделение и подсветку через 1 секунду
             setTimeout(() => {
                 selectedCard.classList.remove('selected', 'incorrect');
                 card.classList.remove('incorrect');
-                selectedCard = null;
             }, 1000);
         }
+        
+        selectedCard = null;
     }
 }
 

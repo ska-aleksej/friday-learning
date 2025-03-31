@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор режима обучения</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div class="container">
+        <a th:href="@{/level/{levelId}(levelId=${unit.levelId})}" class="back-link">← Назад к списку юнитов</a>
+        <h1 th:text="${unit.name}">Название юнита</h1>
+        
+        <div class="modes-grid">
+            <a th:href="@{/memorization/{id}(id=${unit.id})}" class="mode-card">
+                <h2>Запоминание</h2>
+                <p>Изучайте слова с транскрипцией и примерами использования</p>
+            </a>
+            <a th:href="@{/training/{id}(id=${unit.id})}" class="mode-card">
+                <h2>Тренировка</h2>
+                <p>Проверьте свои знания, сопоставляя английские и русские слова</p>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

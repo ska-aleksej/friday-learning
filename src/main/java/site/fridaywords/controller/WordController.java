@@ -66,4 +66,9 @@ public class WordController {
             @RequestParam(defaultValue = "5") int count) {
         return ResponseEntity.ok(wordService.getRandomWordsByUnitId(unitId, count));
     }
+
+    @GetMapping("/unit/{unitId}/all")
+    public ResponseEntity<List<WordResponseDto>> getAllWordsByUnitId(@PathVariable Long unitId) {
+        return ResponseEntity.ok(wordService.getWordsByUnitId(unitId));
+    }
 } 

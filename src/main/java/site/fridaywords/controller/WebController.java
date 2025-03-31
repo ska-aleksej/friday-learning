@@ -46,4 +46,16 @@ public class WebController {
             throw e;
         }
     }
+
+    @GetMapping("/unit/{id}/modes")
+    public String showModes(@PathVariable Long id, Model model) {
+        model.addAttribute("unit", unitService.getUnitById(id));
+        return "mode-selection";
+    }
+
+    @GetMapping("/memorization/{id}")
+    public String showMemorization(@PathVariable Long id, Model model) {
+        model.addAttribute("unit", unitService.getUnitById(id));
+        return "memorization";
+    }
 }
