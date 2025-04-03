@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Тренировка слов</h1>
+        <a th:href="@{/unit/{id}/modes(id=${unit.id})}" class="back-link">Назад к выбору режима</a>
         
         <div class="unit-info" th:data-unit-id="${unit.id}">
             <h2 th:text="${unit.name}">Название юнита</h2>
@@ -25,11 +25,6 @@
             <div class="words-column russian-column">
                 <div id="russianWords" class="words-list"></div>
             </div>
-        </div>
-
-        <div class="navigation">
-            <a th:href="@{/level/{levelId}(levelId=${unit.levelId})}" 
-               class="btn btn-secondary">Назад к списку юнитов</a>
         </div>
     </div>
 

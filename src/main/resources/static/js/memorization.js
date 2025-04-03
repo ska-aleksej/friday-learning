@@ -76,10 +76,30 @@ function displayCurrentWord() {
     document.getElementById('russianWord').textContent = word.russianTranslation;
     document.getElementById('example').textContent = word.exampleSentence;
     updateScore();
+    updateNavigationButtons();
 }
 
 function speakWord(text) {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'en-US';
     window.speechSynthesis.speak(utterance);
+}
+
+function updateNavigationButtons() {
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+    
+    // Скрываем кнопку "назад" если мы на первом слове
+    if (currentIndex === 0) {
+        prevButton.classList.add('hidden');
+    } else {
+        prevButton.classList.remove('hidden');
+    }
+    
+    // Скрываем кнопку "вперед" если мы на последнем слове
+    if (currentIndex === words.length - 1) {
+        nextButton.classList.add('hidden');
+    } else {
+        nextButton.classList.remove('hidden');
+    }
 } 
