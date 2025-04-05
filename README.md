@@ -1,3 +1,10 @@
+#Сборка образа для прода:
+mvn clean package -P prod docker:build
+
+
+
+
+
 ## Технический стек
 
 ### Backend
