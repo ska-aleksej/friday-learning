@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>site.fridaywords</groupId>
+    <groupId>ru.fridaylearning</groupId>
     <artifactId>friday-words</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Friday Words</name>
+    <name>Friday Learning</name>
     <description>Приложение для изучения иностранных слов</description>
 
     <parent>
@@ -23,6 +23,24 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
 
     <dependencies>
         <!-- Spring Boot Starters -->
@@ -99,23 +117,6 @@
                 </configuration>
             </plugin>
         </plugins>
-        <profiles>
-            <profile>
-                <id>dev</id>
-                <activation>
-                    <activeByDefault>true</activeByDefault>
-                </activation>
-                <properties>
-                    <spring.profiles.active>dev</spring.profiles.active>
-                </properties>
-            </profile>
-            <profile>
-                <id>prod</id>
-                <properties>
-                    <spring.profiles.active>prod</spring.profiles.active>
-                </properties>
-            </profile>
-        </profiles>
     </build>
 
 </project>
