@@ -43,4 +43,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/ska-aleksej/friday-words:latest 
+          tags: ghcr.io/ska-aleksej/friday-words:latest
+          visibility: public
