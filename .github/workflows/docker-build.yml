@@ -56,9 +56,6 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # Проверка подлинности образа (если используете Docker Content Trust)
-            export DOCKER_CONTENT_TRUST=1
-            
             # Остановка и удаление только если контейнер существует
             if docker inspect friday-words &>/dev/null; then
               docker stop friday-words || true
