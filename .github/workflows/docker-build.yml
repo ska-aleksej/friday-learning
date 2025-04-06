@@ -44,3 +44,35 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/ska-aleksej/friday-words:latest
+
+  deploy:
+    needs: test-and-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH and Deploy
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Проверка подлинности образа (если используете Docker Content Trust)
+            export DOCKER_CONTENT_TRUST=1
+            
+            # Остановка и удаление только если контейнер существует
+            if docker inspect friday-words &>/dev/null; then
+              docker stop friday-words || true
+              docker rm friday-words || true
+            fi
+
+            # Запуск с явным указанием политики перезапуска
+            docker run -d \
+              --name friday-words \
+              --restart unless-stopped \
+              -p 8080:8080 \
+              -e "SPRING_PROFILES_ACTIVE=prod" \
+              -v /etc/timezone:/etc/timezone:ro \
+              ghcr.io/ska-aleksej/friday-words:latest
+
+            # Очистка старых образов
+            docker image prune -f
