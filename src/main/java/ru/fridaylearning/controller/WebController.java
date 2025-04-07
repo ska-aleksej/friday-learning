@@ -58,4 +58,10 @@ public class WebController {
         model.addAttribute("unit", unitService.getUnitById(id));
         return "memorization";
     }
+
+    @GetMapping("/spelling/{id}")
+    public String showSpelling(@PathVariable Long id, Model model) {
+        model.addAttribute("unit", unitService.getUnitById(id));
+        return "spelling";
+    }
 }
