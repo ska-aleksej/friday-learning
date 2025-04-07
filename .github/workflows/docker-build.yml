@@ -56,6 +56,9 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            # Принудительно загружаем последнюю версию образа
+            docker pull ghcr.io/ska-aleksej/friday-words:latest
+            
             # Остановка и удаление только если контейнер существует
             if docker inspect friday-words &>/dev/null; then
               docker stop friday-words || true
