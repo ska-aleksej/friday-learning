@@ -10,6 +10,9 @@ body {
     line-height: 1.6;
     background-color: #f5f5f5;
     font-size: 16px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
@@ -17,6 +20,9 @@ body {
     margin: 0 auto;
     padding: 20px;
     position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Стили для кнопки возврата */
@@ -48,6 +54,40 @@ body {
     background-color: #f8f9fa;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     transform: translateY(-1px);
+}
+
+/* Стили для контейнера с кнопками в верхней части */
+.header-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Стили для кнопки перезагрузки */
+.reload-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.reload-button:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transform: translateY(-1px);
+}
+
+.reload-icon {
+    font-size: 20px;
+    line-height: 1;
 }
 
 /* Отступы для контента */
@@ -274,21 +314,26 @@ body {
     .levels-grid, .units-grid {
         grid-template-columns: 1fr;
         gap: 15px;
+        padding: 10px;
     }
 
     .level-card, .unit-card {
-        padding: 20px;
-        min-height: 100px;
+        padding: 25px;
+        min-height: 150px;
     }
 
     .level-card h2, .unit-card h2 {
-        font-size: 20px;
-        margin-bottom: 10px;
+        font-size: 28px;
+        margin-bottom: 15px;
     }
 
     .level-card p, .unit-card p {
-        font-size: 16px;
-        margin-bottom: 10px;
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .level-card .count, .unit-card .count {
+        font-size: 18px;
     }
 
     /* Улучшенные стили для режима заучивания */
@@ -529,6 +574,108 @@ body {
     margin: 0;
 }
 
+/* Стили для режима правописания */
+.spelling-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.spelling-container .word-card {
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.word-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.speak-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 10px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.speak-button:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.1);
+}
+
+.russian-translation {
+    font-size: 18px;
+    color: #666;
+}
+
+.input-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+#wordInput {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+#wordInput:focus {
+    border-color: #2196f3;
+    outline: none;
+}
+
+.check-button {
+    padding: 12px 24px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+
+.check-button:hover {
+    background-color: #1976d2;
+}
+
+.result-message {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 16px;
+    min-height: 24px;
+}
+
+.result-message.correct {
+    color: #4caf50;
+}
+
+.result-message.incorrect {
+    color: #f44336;
+}
+
 /* Медиа-запросы для мобильных устройств */
 @media (max-width: 768px) {
     .container {
@@ -546,22 +693,26 @@ body {
     .level-card,
     .unit-card,
     .mode-card {
-        padding: 20px;
-        min-height: 120px;
+        padding: 25px;
+        min-height: 150px;
     }
 
     .level-card h2,
     .unit-card h2,
     .mode-card h2 {
-        font-size: 24px;
-        margin-bottom: 10px;
+        font-size: 28px;
+        margin-bottom: 15px;
     }
 
     .level-card p,
     .unit-card p,
     .mode-card p {
-        font-size: 16px;
-        margin-bottom: 10px;
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .level-card .count, .unit-card .count {
+        font-size: 18px;
     }
 
     .memorization-container {
@@ -598,5 +749,64 @@ body {
 
     .speak-icon {
         font-size: 20px;
+    }
+    
+    /* Стили для режима правописания на мобильных устройствах */
+    .container {
+        height: 100vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .spelling-container {
+        padding: 15px;
+        margin: 10px auto;
+        height: auto;
+        min-height: 0;
+    }
+    
+    .word-card {
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+    
+    .input-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .check-button {
+        width: 100%;
+        padding: 12px;
+    }
+    
+    .header-buttons {
+        margin-bottom: 15px;
+    }
+    
+    .reload-button {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .reload-icon {
+        font-size: 18px;
+    }
+    
+    /* Фиксированная высота для контейнера на мобильных устройствах */
+    .spelling-container {
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+    }
+    
+    /* Предотвращаем масштабирование на мобильных устройствах */
+    @viewport {
+        width: device-width;
+        zoom: 1.0;
+    }
+    
+    /* Отключаем выделение текста при тапах */
+    * {
+        -webkit-tap-highlight-color: transparent;
     }
 } 

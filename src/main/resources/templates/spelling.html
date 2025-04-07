@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тренировка правописания</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div class="container">
+        <div class="header-buttons">
+            <a th:href="@{/unit/{id}/modes(id=${unit.id})}" class="back-link">Назад к выбору режима</a>
+            <button id="newSetButton" class="reload-button" title="Новый набор слов">
+                <span class="reload-icon">🔄</span>
+            </button>
+        </div>
+        
+        <div class="unit-info" th:data-unit-id="${unit.id}">
+            <h2 th:text="${unit.name}">Название юнита</h2>
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            <div class="score" id="score">0/0</div>
+        </div>
+
+        <div class="spelling-container">
+            <div class="word-card">
+                <div class="word-info">
+                    <button id="speakButton" class="speak-button">
+                        <span class="speak-icon">🔊</span>
+                    </button>
+                    <div class="russian-translation" id="russianTranslation"></div>
+                </div>
+                <div class="input-container">
+                    <input type="text" id="wordInput" placeholder="Введите слово..." autocomplete="off">
+                    <button id="checkButton" class="check-button">Проверить</button>
+                </div>
+                <div class="result-message" id="resultMessage"></div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/spelling.js}"></script>
+</body>
+</html> 
