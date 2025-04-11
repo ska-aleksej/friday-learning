@@ -4,7 +4,11 @@ INSERT INTO units (level_id, name, description, display_order) VALUES
     ((SELECT id FROM levels WHERE name = 'B1'), 'Unit 2 - Arts & Entertainment', 'Искусство и развлечения', 2),
     ((SELECT id FROM levels WHERE name = 'B1'), 'Unit 3 - Water Sports & Nature', 'Водные виды спорта и природа', 3),
     ((SELECT id FROM levels WHERE name = 'B1'), 'Unit 4 - Work & Employment', 'Работа и трудоустройство', 4),
-    ((SELECT id FROM levels WHERE name = 'B1'), 'Unit 5 - Health & Nutrition', 'Здоровье и питание', 5);
+    ((SELECT id FROM levels WHERE name = 'B1'), 'Unit 5 - Health & Nutrition', 'Здоровье и питание', 5),
+    ((SELECT id FROM levels WHERE name = 'B1'), 'Unit 6 - Accidents & Incidents', 'Несчастные случаи и происшествия', 6),
+    ((SELECT id FROM levels WHERE name = 'B1'), 'Unit 7 - Urban & Natural Environments', 'Городские и природные среды', 7),
+    ((SELECT id FROM levels WHERE name = 'B1'), 'Unit 8 - Travel & Tourism', 'Путешествия и туризм', 8),
+    ((SELECT id FROM levels WHERE name = 'B1'), 'Unit 9 - Shopping & Commerce', 'Покупки и коммерция', 9);
 
 -- Seed_B1_Unit1_words.sql
 WITH unit_data AS (
@@ -385,5 +389,288 @@ CROSS JOIN (
     SELECT 'unsold', 'нераспроданный', '/ʌnˈsəʊld/', 'The unsold merchandise was discounted.' UNION ALL
     SELECT 'unwanted', 'ненужный', '/ʌnˈwɒn.tɪd/', 'We donated unwanted clothes to charity.' UNION ALL
     SELECT 'willpower', 'сила воли', '/ˈwɪlˌpaʊ.ər/', 'Losing weight requires strong willpower.'
+) AS data
+WHERE EXISTS (SELECT 1 FROM unit_data);
+
+-- Seed_B1_Unit6_words.sql
+WITH unit_data AS (
+    SELECT u.id AS unit_id
+    FROM units u
+    JOIN levels l ON u.level_id = l.id
+    WHERE l.name = 'B1' AND u.display_order = 6
+)
+INSERT INTO words (unit_id, english_word, russian_translation, transcription, example_sentence)
+SELECT ud.unit_id, data.english_word, data.russian_translation, data.transcription, data.example_sentence
+FROM unit_data ud
+CROSS JOIN (
+    SELECT 'accidentally' AS english_word, 'случайно' AS russian_translation, '/ˌæk.sɪˈden.təl.i/' AS transcription, 'I accidentally deleted the important file.' AS example_sentence UNION ALL
+    SELECT 'apparently', 'очевидно', '/əˈpær.ənt.li/', 'Apparently, the meeting has been postponed.' UNION ALL
+    SELECT 'arrest', 'арест, арестовать', '/əˈrest/', 'The police arrested the suspect yesterday.' UNION ALL
+    SELECT 'atmosphere', 'атмосфера', '/ˈæt.mə.sfɪər/', 'The atmosphere in the room was tense.' UNION ALL
+    SELECT 'attempt', 'попытка, пытаться', '/əˈtempt/', 'He attempted to climb the mountain alone.' UNION ALL
+    SELECT 'background', 'фон', '/ˈbæk.ɡraʊnd/', 'She has a background in computer science.' UNION ALL
+    SELECT 'book', 'бронировать', '/bʊk/', 'We need to book our hotel rooms in advance.' UNION ALL
+    SELECT 'buoy', 'буй, бакен', '/bɔɪ/', 'The buoy marks the safe swimming area.' UNION ALL
+    SELECT 'cable', 'кабель, трос', '/ˈkeɪ.bəl/', 'The elevator is suspended by strong cables.' UNION ALL
+    SELECT 'capture', 'захватывать', '/ˈkæp.tʃər/', 'The photograph captures the beautiful sunset.' UNION ALL
+    SELECT 'clear', 'ясный, ясно', '/klɪər/', 'The instructions were clear and easy to follow.' UNION ALL
+    SELECT 'coast', 'побережье', '/kəʊst/', 'We drove along the scenic coast all day.' UNION ALL
+    SELECT 'coincidentally', 'по случайному совпадению', '/kəʊˌɪn.sɪˈden.təl.i/', 'Coincidentally, we were wearing the same dress.' UNION ALL
+    SELECT 'contact', 'связаться с кем-либо', '/ˈkɒn.tækt/', 'Please contact me if you have any questions.' UNION ALL
+    SELECT 'deliberately', 'преднамеренно', '/dɪˈlɪb.ər.ət.li/', 'He deliberately ignored my messages.' UNION ALL
+    SELECT 'diagram', 'диаграмма', '/ˈdaɪ.ə.ɡræm/', 'The diagram explains how the machine works.' UNION ALL
+    SELECT 'distinguish', 'различать, отличать', '/dɪˈstɪŋ.ɡwɪʃ/', 'It''s hard to distinguish the twins apart.' UNION ALL
+    SELECT 'drawing', 'рисунок, рисование', '/ˈdrɔː.ɪŋ/', 'She showed me her latest drawing.' UNION ALL
+    SELECT 'drawing pin', 'канцелярская кнопка', '/ˈdrɔː.ɪŋ ˌpɪn/', 'I used a drawing pin to hang the poster.' UNION ALL
+    SELECT 'drip', 'капать, стекать', '/drɪp/', 'Water was dripping from the leaky faucet.' UNION ALL
+    SELECT 'exposed', 'уязвимый, незащищённый', '/ɪkˈspəʊzd/', 'The wires were exposed and dangerous.' UNION ALL
+    SELECT 'eyelash', 'ресничка', '/ˈaɪ.læʃ/', 'She has naturally long eyelashes.' UNION ALL
+    SELECT 'eyewitness', 'очевидец', '/ˈaɪ.wɪt.nəs/', 'An eyewitness described the accident to police.' UNION ALL
+    SELECT 'figure', 'фигура', '/ˈfɪɡ.ər/', 'The dark figure disappeared into the night.' UNION ALL
+    SELECT 'finance', 'финансы, финансировать', '/ˈfaɪ.næns/', 'The project was financed by the government.' UNION ALL
+    SELECT 'fly', 'летать', '/flaɪ/', 'Birds were flying south for the winter.' UNION ALL
+    SELECT 'forged', 'поддельный', '/fɔːdʒd/', 'The museum discovered the painting was forged.' UNION ALL
+    SELECT 'fortune', 'состояние (денежн.)', '/ˈfɔː.tʃuːn/', 'He made his fortune in the tech industry.' UNION ALL
+    SELECT 'genetic profile', 'генетический профиль', '/dʒəˌnet.ɪk ˈprəʊ.faɪl/', 'The genetic profile helped solve the crime.' UNION ALL
+    SELECT 'genuine', 'подлинный', '/ˈdʒen.ju.ɪn/', 'This appears to be a genuine antique.' UNION ALL
+    SELECT 'gradually', 'постепенно', '/ˈɡrædʒ.u.ə.li/', 'The pain gradually disappeared.' UNION ALL
+    SELECT 'ground', 'земля, почва', '/ɡraʊnd/', 'The ground was frozen solid.' UNION ALL
+    SELECT 'head off', 'отправляться', '/ˌhed ˈɒf/', 'We need to head off before dark.' UNION ALL
+    SELECT 'hump', 'горб, горбиться', '/hʌmp/', 'Camels store fat in their humps.' UNION ALL
+    SELECT 'identical', 'идентичный', '/aɪˈden.tɪ.kəl/', 'The twins wore identical outfits.' UNION ALL
+    SELECT 'immediately', 'немедленно', '/ɪˈmiː.di.ət.li/', 'Please call me immediately if you need help.' UNION ALL
+    SELECT 'land', 'приземляться', '/lænd/', 'The plane will land in 20 minutes.' UNION ALL
+    SELECT 'landslide', 'обвал, оползень', '/ˈlænd.slaɪd/', 'The heavy rain caused a dangerous landslide.' UNION ALL
+    SELECT 'line', 'линия (очередь)', '/laɪn/', 'There was a long line at the ticket office.' UNION ALL
+    SELECT 'meteorite', 'метеорит', '/ˈmiː.ti.ə.raɪt/', 'Scientists studied the rare meteorite.' UNION ALL
+    SELECT 'motor', 'мотор, двигатель', '/ˈməʊ.tər/', 'The boat''s motor stopped working suddenly.' UNION ALL
+    SELECT 'navigator', 'мореплаватель', '/ˈnæv.ɪ.ɡeɪ.tər/', 'The navigator plotted our course carefully.' UNION ALL
+    SELECT 'open', 'открытый', '/ˈəʊ.pən/', 'Leave the door open, please.' UNION ALL
+    SELECT 'parasailing', 'парасейлинг', '/ˈpær.ə.seɪ.lɪŋ/', 'We tried parasailing during our beach vacation.' UNION ALL
+    SELECT 'pattern', 'узор', '/ˈpæt.ən/', 'The fabric had an interesting geometric pattern.' UNION ALL
+    SELECT 'plan', 'план, планировать', '/plæn/', 'We need to plan our trip carefully.' UNION ALL
+    SELECT 'plug in', 'включить что-то в розетку', '/ˌplʌɡ ˈɪn/', 'Plug in the charger before the battery dies.' UNION ALL
+    SELECT 'record', 'записывать', '/rɪˈkɔːd/', 'The journalist recorded the interview.' UNION ALL
+    SELECT 'remains', 'останки', '/rɪˈmeɪnz/', 'Archaeologists discovered ancient human remains.' UNION ALL
+    SELECT 'roughly', 'приблизительно', '/ˈrʌf.li/', 'The repair will cost roughly $200.' UNION ALL
+    SELECT 'sample', 'образец, шаблон', '/ˈsɑːm.pəl/', 'They gave us a free sample of the new perfume.' UNION ALL
+    SELECT 'shape', 'форма', '/ʃeɪp/', 'The cookies were in star shapes.' UNION ALL
+    SELECT 'spade', 'лопата/копать лопатой', '/speɪd/', 'He dug the hole with a small spade.' UNION ALL
+    SELECT 'spotter', 'наблюдатель, сыщик', '/ˈspɒt.ər/', 'The bird spotter identified rare species.' UNION ALL
+    SELECT 'stuck', 'застрявший, застрять', '/stʌk/', 'The car got stuck in the muddy road.' UNION ALL
+    SELECT 'submerge', 'погружаться', '/səbˈmɜːdʒ/', 'The submarine submerged beneath the waves.' UNION ALL
+    SELECT 'temporarily', 'временный', '/ˈtem.pər.ər.əl.i/', 'The office is temporarily closed for repairs.' UNION ALL
+    SELECT 'test', 'тестировать, тест', '/test/', 'All products must pass safety tests.' UNION ALL
+    SELECT 'turtle', 'черепаха', '/ˈtɜː.təl/', 'We saw sea turtles while snorkeling.' UNION ALL
+    SELECT 'unfortunately', 'к несчастью', '/ʌnˈfɔː.tʃən.ət.li/', 'Unfortunately, our flight was canceled.' UNION ALL
+    SELECT 'wax', 'воск', '/wæks/', 'The candle was made of beeswax.' UNION ALL
+    SELECT 'workplace', 'рабочее место', '/ˈwɜːk.pleɪs/', 'Safety is important in the workplace.' UNION ALL
+    SELECT 'yard', 'двор', '/jɑːd/', 'The children are playing in the yard.'
+) AS data
+WHERE EXISTS (SELECT 1 FROM unit_data);
+
+-- Seed_B1_Unit7_words.sql
+WITH unit_data AS (
+    SELECT u.id AS unit_id
+    FROM units u
+    JOIN levels l ON u.level_id = l.id
+    WHERE l.name = 'B1' AND u.display_order = 7
+)
+INSERT INTO words (unit_id, english_word, russian_translation, transcription, example_sentence)
+SELECT ud.unit_id, data.english_word, data.russian_translation, data.transcription, data.example_sentence
+FROM unit_data ud
+CROSS JOIN (
+    SELECT 'artist' AS english_word, 'художник, артист' AS russian_translation, '/ˈɑː.tɪst/' AS transcription, 'Van Gogh was a famous Dutch artist.' AS example_sentence UNION ALL
+    SELECT 'atmosphere', 'атмосфера', '/ˈæt.mə.sfɪər/', 'The cafe had a cozy atmosphere.' UNION ALL
+    SELECT 'bear', 'медведь', '/beər/', 'We saw a brown bear in the forest.' UNION ALL
+    SELECT 'beaver', 'бобер', '/ˈbiː.vər/', 'Beavers build dams in rivers.' UNION ALL
+    SELECT 'bench', 'скамейка', '/bentʃ/', 'Let''s sit on that park bench.' UNION ALL
+    SELECT 'benefit', 'выгода, польза', '/ˈben.ɪ.fɪt/', 'Regular exercise has many health benefits.' UNION ALL
+    SELECT 'block', 'блок (квартал)', '/blɒk/', 'The museum is two blocks away.' UNION ALL
+    SELECT 'brick', 'кирпич', '/brɪk/', 'The old house was built of red brick.' UNION ALL
+    SELECT 'bright', 'яркий, светлый', '/braɪt/', 'She wore a bright yellow dress.' UNION ALL
+    SELECT 'budget', 'бюджет', '/ˈbʌdʒ.ɪt/', 'We need to stick to our monthly budget.' UNION ALL
+    SELECT 'built-up', 'застроенный', '/ˌbɪlt ˈʌp/', 'This used to be farmland but now it''s built-up.' UNION ALL
+    SELECT 'centre', 'центр', '/ˈsen.tər/', 'The shopping centre is very busy.' UNION ALL
+    SELECT 'clap', 'хлопать в ладоши', '/klæp/', 'The audience clapped after the performance.' UNION ALL
+    SELECT 'cloth', 'ткань', '/klɒθ/', 'This cloth is made from cotton.' UNION ALL
+    SELECT 'coast', 'побережье', '/kəʊst/', 'The hotel has a beautiful coast view.' UNION ALL
+    SELECT 'cordless', 'беспроводной', '/ˈkɔːd.ləs/', 'We bought a new cordless phone.' UNION ALL
+    SELECT 'cramped', 'стеснённый (в пространстве)', '/kræmpt/', 'The apartment felt cramped with all our furniture.' UNION ALL
+    SELECT 'design', 'проектировать', '/dɪˈzaɪn/', 'She designs beautiful wedding dresses.' UNION ALL
+    SELECT 'development', 'развитие, разработка', '/dɪˈvel.əp.mənt/', 'The new housing development will have 100 homes.' UNION ALL
+    SELECT 'downtown', 'центр города', '/ˌdaʊnˈtaʊn/', 'Let''s go downtown for dinner tonight.' UNION ALL
+    SELECT 'dreamy', 'мечтательный', '/ˈdriː.mi/', 'He has a dreamy look in his eyes.' UNION ALL
+    SELECT 'economy', 'экономика', '/ɪˈkɒn.ə.mi/', 'The country''s economy is growing.' UNION ALL
+    SELECT 'energy', 'энергия', '/ˈen.ə.dʒi/', 'Solar panels produce clean energy.' UNION ALL
+    SELECT 'fact', 'факт', '/fækt/', 'It''s a fact that smoking causes cancer.' UNION ALL
+    SELECT 'financial', 'финансовый', '/faɪˈnæn.ʃəl/', 'We need financial advice for our business.' UNION ALL
+    SELECT 'fit', 'в хорошей форме', '/fɪt/', 'He stays fit by jogging every morning.' UNION ALL
+    SELECT 'flatmate', 'сосед по квартире', '/ˈflæt.meɪt/', 'My flatmate and I share the kitchen.' UNION ALL
+    SELECT 'flood', 'наводнение, потоп', '/flʌd/', 'Heavy rains caused severe flooding.' UNION ALL
+    SELECT 'gasoline', 'бензин', '/ˈɡæs.ə.liːn/', 'Gasoline prices have risen again.' UNION ALL
+    SELECT 'ger', 'юрта', '/ɡer/', 'Nomadic families live in gers.' UNION ALL
+    SELECT 'grassland', 'пастбище, луг', '/ˈɡrɑːs.lænd/', 'Cattle graze on the vast grasslands.' UNION ALL
+    SELECT 'habitat', 'место обитания', '/ˈhæb.ɪ.tæt/', 'Pollution destroys animal habitats.' UNION ALL
+    SELECT 'history', 'история', '/ˈhɪs.tər.i/', 'I''m studying European history.' UNION ALL
+    SELECT 'improvise', 'импровизировать', '/ˈɪm.prə.vaɪz/', 'When the speaker didn''t arrive, we had to improvise.' UNION ALL
+    SELECT 'ironic', 'иронический', '/aɪˈrɒn.ɪk/', 'It''s ironic that the fire station burned down.' UNION ALL
+    SELECT 'marsh', 'болото, топь', '/mɑːʃ/', 'The marsh is home to many birds.' UNION ALL
+    SELECT 'milky way', 'Млечный путь', '/ˌmɪl.ki ˈweɪ/', 'We could see the Milky Way clearly in the dark sky.' UNION ALL
+    SELECT 'mix', 'смешивать', '/mɪks/', 'Mix the flour and eggs together.' UNION ALL
+    SELECT 'nation', 'народ, нация', '/ˈneɪ.ʃən/', 'The president spoke to the nation.' UNION ALL
+    SELECT 'nature', 'природа', '/ˈneɪ.tʃər/', 'We should protect nature for future generations.' UNION ALL
+    SELECT 'neighbourhood', 'соседство, окрестности', '/ˈneɪ.bə.hʊd/', 'It''s a quiet neighbourhood with friendly people.' UNION ALL
+    SELECT 'nightmare', 'ночной кошмар', '/ˈnaɪt.meər/', 'I had a terrible nightmare last night.' UNION ALL
+    SELECT 'nod', 'кивать головой', '/nɒd/', 'She nodded in agreement.' UNION ALL
+    SELECT 'noise', 'шум', '/nɔɪz/', 'The noise from construction was unbearable.' UNION ALL
+    SELECT 'origin', 'происхождение', '/ˈɒr.ɪ.dʒɪn/', 'The product''s origin is Italy.' UNION ALL
+    SELECT 'picturesque', 'живописный', '/ˌpɪk.tʃərˈesk/', 'We stayed in a picturesque village.' UNION ALL
+    SELECT 'potential', 'потенциальный', '/pəˈten.ʃəl/', 'This young athlete has great potential.' UNION ALL
+    SELECT 'privacy', 'частная жизнь', '/ˈprɪv.ə.si/', 'Everyone needs some privacy sometimes.' UNION ALL
+    SELECT 'reasonable', 'благоразумный', '/ˈriː.zən.ə.bəl/', 'The price seems reasonable for this quality.' UNION ALL
+    SELECT 'reforestation', 'восстановление леса', '/ˌriː.fɒr.ɪˈsteɪ.ʃən/', 'The reforestation project planted 10,000 trees.' UNION ALL
+    SELECT 'resident', 'постоянный житель', '/ˈrez.ɪ.dənt/', 'City residents pay local taxes.' UNION ALL
+    SELECT 'respectfully', 'с уважением', '/rɪˈspekt.fəl.i/', 'He always speaks respectfully to elders.' UNION ALL
+    SELECT 'rhyme', 'рифма, стих', '/raɪm/', 'Children love poems with rhyme.' UNION ALL
+    SELECT 'rock', 'камень', '/rɒk/', 'The path was covered with small rocks.' UNION ALL
+    SELECT 'romance', 'романтика', '/rəʊˈmæns/', 'Paris is known as the city of romance.' UNION ALL
+    SELECT 'shared', 'общий, совместный', '/ʃeəd/', 'We have a shared kitchen in the dorm.' UNION ALL
+    SELECT 'shelter', 'приют, убежище', '/ˈʃel.tər/', 'The storm forced us to seek shelter.' UNION ALL
+    SELECT 'shine', 'светить, сиять', '/ʃaɪn/', 'The sun was shining brightly.' UNION ALL
+    SELECT 'skin', 'кожа, шкура', '/skɪn/', 'She has sensitive skin that burns easily.' UNION ALL
+    SELECT 'skyscraper', 'небоскреб', '/ˈskaɪˌskreɪ.pər/', 'New York is famous for its skyscrapers.' UNION ALL
+    SELECT 'spot', 'место', '/spɒt/', 'This is the perfect spot for a picnic.' UNION ALL
+    SELECT 'stage', 'этап', '/steɪdʒ/', 'The project is in its final stage.' UNION ALL
+    SELECT 'stilt', 'свая, ходуля, стойка', '/stɪlt/', 'The house was built on stilts.' UNION ALL
+    SELECT 'store', 'магазин', '/stɔːr/', 'I need to stop by the grocery store.' UNION ALL
+    SELECT 'tap', 'постукивать', '/tæp/', 'She tapped her fingers impatiently.' UNION ALL
+    SELECT 'telescope', 'телескоп', '/ˈtel.ɪ.skəʊp/', 'We looked at the stars through a telescope.' UNION ALL
+    SELECT 'turkey', 'индейка', '/ˈtɜː.ki/', 'We eat roast turkey at Thanksgiving.' UNION ALL
+    SELECT 'unique', 'уникальный', '/juˈniːk/', 'Each snowflake has a unique pattern.' UNION ALL
+    SELECT 'untidy', 'неопрятный', '/ʌnˈtaɪ.di/', 'His room is always untidy.' UNION ALL
+    SELECT 'utilise', 'использовать', '/ˈjuː.tɪ.laɪz/', 'We should utilise solar energy more.' UNION ALL
+    SELECT 'wireless', 'беспроводной', '/ˈwaɪə.ləs/', 'Most devices now have wireless connection.' UNION ALL
+    SELECT 'working-class', 'рабочий класс, трудящиеся', '/ˌwɜː.kɪŋ ˈklɑːs/', 'The working-class neighborhood was vibrant.'
+) AS data
+WHERE EXISTS (SELECT 1 FROM unit_data);
+
+-- Seed_B1_Unit8_words.sql
+WITH unit_data AS (
+    SELECT u.id AS unit_id
+    FROM units u
+    JOIN levels l ON u.level_id = l.id
+    WHERE l.name = 'B1' AND u.display_order = 8
+)
+INSERT INTO words (unit_id, english_word, russian_translation, transcription, example_sentence)
+SELECT ud.unit_id, data.english_word, data.russian_translation, data.transcription, data.example_sentence
+FROM unit_data ud
+CROSS JOIN (
+    SELECT 'aerial' AS english_word, 'воздушный' AS russian_translation, '/ˈeə.ri.əl/' AS transcription, 'The aerial view of the city was breathtaking.' AS example_sentence UNION ALL
+    SELECT 'appliance', 'прибор, устройство', '/əˈplaɪ.əns/', 'Modern kitchens have many electrical appliances.' UNION ALL
+    SELECT 'backpacking', 'пеший туризм', '/ˈbæk.pæk.ɪŋ/', 'We went backpacking through Southeast Asia.' UNION ALL
+    SELECT 'baggage allowance', 'норма багажа', '/ˈbæɡ.ɪdʒ əˌlaʊ.əns/', 'Check your baggage allowance before flying.' UNION ALL
+    SELECT 'binoculars', 'бинокль', '/bɪˈnɒk.jə.ləz/', 'We used binoculars to watch birds.' UNION ALL
+    SELECT 'blank', 'пустой', '/blæŋk/', 'Please write your name on the blank line.' UNION ALL
+    SELECT 'blood', 'кровь', '/blʌd/', 'The doctor took a blood sample for tests.' UNION ALL
+    SELECT 'board game', 'настольная игра', '/ˈbɔːd ˌɡeɪm/', 'We played board games during the flight delay.' UNION ALL
+    SELECT 'challenge', 'вызов, испытание', '/ˈtʃæl.ɪndʒ/', 'Climbing the mountain was a real challenge.' UNION ALL
+    SELECT 'character', 'символ', '/ˈkær.ək.tər/', 'Chinese writing uses thousands of characters.' UNION ALL
+    SELECT 'charge', 'взимать', '/tʃɑːdʒ/', 'The hotel charges extra for parking.' UNION ALL
+    SELECT 'cliff', 'утес', '/klɪf/', 'The cliff dropped sharply to the sea below.' UNION ALL
+    SELECT 'cruise', 'круиз', '/kruːz/', 'We''re taking a Caribbean cruise next month.' UNION ALL
+    SELECT 'curious', 'любопытный', '/ˈkjʊə.ri.əs/', 'Tourists were curious about local traditions.' UNION ALL
+    SELECT 'customs check', 'таможенный контроль', '/ˈkʌs.təmz ˌtʃek/', 'Everyone must pass through customs check.' UNION ALL
+    SELECT 'dig up', 'раскапывать', '/ˌdɪɡ ˈʌp/', 'Archaeologists dug up ancient artifacts.' UNION ALL
+    SELECT 'drive', 'побуждать', '/draɪv/', 'What drives people to travel so much?' UNION ALL
+    SELECT 'ecotourism', 'эко туризм', '/ˈiː.kəʊˌtʊə.rɪ.zəm/', 'Ecotourism helps protect natural environments.' UNION ALL
+    SELECT 'engage', 'вступать, обязываться', '/ɪnˈɡeɪdʒ/', 'It''s important to engage with local cultures.' UNION ALL
+    SELECT 'equipment', 'оборудование', '/ɪˈkwɪp.mənt/', 'We rented camping equipment for our trip.' UNION ALL
+    SELECT 'essentials', 'предметы первой необходимости', '/ɪˈsen.ʃəlz/', 'Don''t forget travel essentials like passports.' UNION ALL
+    SELECT 'fresh water', 'пресная/питьевая вода', '/ˌfreʃ ˈwɔː.tər/', 'Always carry fresh water when hiking.' UNION ALL
+    SELECT 'grow', 'расти', '/ɡrəʊ/', 'Tourism continues to grow in this region.' UNION ALL
+    SELECT 'head', 'направляться', '/hed/', 'We''re heading to the airport now.' UNION ALL
+    SELECT 'headlamp', 'налобный фонарь', '/ˈhed.læmp/', 'The headlamp was essential for night hiking.' UNION ALL
+    SELECT 'household', 'домохозяйство', '/ˈhaʊs.həʊld/', 'The average household has 2.4 members.' UNION ALL
+    SELECT 'jetlagged', 'акклиматизация, уставший после перелета', '/ˈdʒet.læɡd/', 'I felt jetlagged for days after the long flight.' UNION ALL
+    SELECT 'low-impact', 'малотравматичные', '/ˌləʊ ˈɪm.pækt/', 'We chose low-impact tourism activities.' UNION ALL
+    SELECT 'malaria', 'малярия', '/məˈleə.ri.ə/', 'Malaria prevention is important in tropical areas.' UNION ALL
+    SELECT 'paddle', 'грести', '/ˈpæd.əl/', 'We paddled our canoe down the river.' UNION ALL
+    SELECT 'paintbrush', 'кисточка', '/ˈpeɪnt.brʌʃ/', 'She bought a paintbrush for her watercolors.' UNION ALL
+    SELECT 'pigeon', 'голубь', '/ˈpɪdʒ.ɪn/', 'Pigeons gathered in the town square.' UNION ALL
+    SELECT 'pollution', 'загрязнение', '/pəˈluː.ʃən/', 'Air pollution affects many big cities.' UNION ALL
+    SELECT 'power', 'энергия', '/paʊər/', 'The storm knocked out power for hours.' UNION ALL
+    SELECT 'redwood', 'секвойя', '/ˈred.wʊd/', 'California''s redwood trees are enormous.' UNION ALL
+    SELECT 'route', 'маршрут', '/ruːt/', 'We planned our route carefully.' UNION ALL
+    SELECT 'rubbish', 'мусор', '/ˈrʌb.ɪʃ/', 'Please dispose of rubbish properly.' UNION ALL
+    SELECT 'save', 'сохранить, спасти', '/seɪv/', 'We want to save endangered species.' UNION ALL
+    SELECT 'step', 'ступать', '/step/', 'Watch your step on the uneven path.' UNION ALL
+    SELECT 'sunblock', 'солнцезащитный крем', '/ˈsʌn.blɒk/', 'Don''t forget to apply sunblock at the beach.' UNION ALL
+    SELECT 'survey', 'опрос, исследование', '/ˈsɜː.veɪ/', 'The tourism survey helped improve services.' UNION ALL
+    SELECT 'tax', 'налог', '/tæks/', 'There''s a tourist tax at this hotel.' UNION ALL
+    SELECT 'temperature', 'температура', '/ˈtem.prə.tʃər/', 'The temperature reached 30°C today.' UNION ALL
+    SELECT 'tip', 'совет', '/tɪp/', 'Here''s a useful travel tip: pack light.' UNION ALL
+    SELECT 'travel sickness', 'укачивание, морская болезнь', '/ˈtræv.əl ˌsɪk.nəs/', 'She suffers from travel sickness in cars.' UNION ALL
+    SELECT 'trek', 'поход', '/trek/', 'The mountain trek took three days.' UNION ALL
+    SELECT 'vast', 'огромный', '/vɑːst/', 'The desert stretches across vast areas.' UNION ALL
+    SELECT 'vehicle', 'средство передвижения', '/ˈvɪə.kəl/', 'All vehicles must pay the toll.' UNION ALL
+    SELECT 'wilderness', 'дикая природа', '/ˈwɪl.də.nəs/', 'We camped in the wilderness for a week.'
+) AS data
+WHERE EXISTS (SELECT 1 FROM unit_data);
+
+-- Seed_B1_Unit9_words.sql
+WITH unit_data AS (
+    SELECT u.id AS unit_id
+    FROM units u
+    JOIN levels l ON u.level_id = l.id
+    WHERE l.name = 'B1' AND u.display_order = 9
+)
+INSERT INTO words (unit_id, english_word, russian_translation, transcription, example_sentence)
+SELECT ud.unit_id, data.english_word, data.russian_translation, data.transcription, data.example_sentence
+FROM unit_data ud
+CROSS JOIN (
+    SELECT 'afford' AS english_word, 'иметь возможность, позволить себе' AS russian_translation, '/əˈfɔːd/' AS transcription, 'We can''t afford such an expensive car.' AS example_sentence UNION ALL
+    SELECT 'amount', 'количество', '/əˈmaʊnt/', 'The amount of sugar in this recipe seems too high.' UNION ALL
+    SELECT 'arrange', 'договариваться', '/əˈreɪndʒ/', 'Let''s arrange a meeting for next week.' UNION ALL
+    SELECT 'available', 'доступный', '/əˈveɪ.lə.bəl/', 'This dress is available in three colors.' UNION ALL
+    SELECT 'budget', 'бюджет', '/ˈbʌdʒ.ɪt/', 'We set a strict budget for our shopping.' UNION ALL
+    SELECT 'cart', 'телега', '/kɑːt/', 'Supermarkets provide shopping carts.' UNION ALL
+    SELECT 'change', 'сдача', '/tʃeɪndʒ/', 'Keep the change from your purchase.' UNION ALL
+    SELECT 'cheat', 'обманывать', '/tʃiːt/', 'Some sellers cheat customers with fake goods.' UNION ALL
+    SELECT 'checkout', 'касса', '/ˈtʃek.aʊt/', 'The supermarket has self-service checkouts.' UNION ALL
+    SELECT 'chest', 'ящик', '/tʃest/', 'The antique chest contained old coins.' UNION ALL
+    SELECT 'copper', 'медь', '/ˈkɒp.ər/', 'Copper is used for electrical wiring.' UNION ALL
+    SELECT 'cosmetics', 'косметика', '/kɒzˈmet.ɪks/', 'She bought new cosmetics at the mall.' UNION ALL
+    SELECT 'courteous', 'вежливый', '/ˈkɜː.ti.əs/', 'The sales assistant was very courteous.' UNION ALL
+    SELECT 'date', 'финик', '/deɪt/', 'Dates are sweet fruits from palm trees.' UNION ALL
+    SELECT 'deal', 'сделка', '/diːl/', 'We got a great deal on this refrigerator.' UNION ALL
+    SELECT 'delivery', 'доставка', '/dɪˈlɪv.ər.i/', 'The delivery will arrive tomorrow.' UNION ALL
+    SELECT 'distribute', 'распространять', '/dɪˈstrɪb.juːt/', 'The company distributes products worldwide.' UNION ALL
+    SELECT 'exchange', 'обмен', '/ɪksˈtʃeɪndʒ/', 'Can I exchange this shirt for a larger size?' UNION ALL
+    SELECT 'fig', 'инжир', '/fɪɡ/', 'Figs are delicious fresh or dried.' UNION ALL
+    SELECT 'fixed', 'неизменный', '/fɪkst/', 'The price is fixed and can''t be negotiated.' UNION ALL
+    SELECT 'gift-wrap', 'упаковывать подарок', '/ˈɡɪft.ræp/', 'Would you like this gift-wrapped for free?' UNION ALL
+    SELECT 'goods', 'товары', '/ɡʊdz/', 'The store sells quality goods at fair prices.' UNION ALL
+    SELECT 'kaftan', 'кафтан', '/ˈkæf.tæn/', 'She wore a beautiful embroidered kaftan.' UNION ALL
+    SELECT 'merchant', 'купец', '/ˈmɜː.tʃənt/', 'In medieval times, merchants traveled with caravans.' UNION ALL
+    SELECT 'model', 'образец', '/ˈmɒd.əl/', 'This is last year''s model at a discount.' UNION ALL
+    SELECT 'olive', 'оливка', '/ˈɒl.ɪv/', 'Olive oil is healthy for cooking.' UNION ALL
+    SELECT 'package', 'упаковка', '/ˈpæk.ɪdʒ/', 'The package arrived damaged.' UNION ALL
+    SELECT 'pressure', 'давление', '/ˈpreʃ.ər/', 'Sales staff face pressure to meet targets.' UNION ALL
+    SELECT 'purchase', 'покупка', '/ˈpɜː.tʃəs/', 'Keep your purchase receipt for returns.' UNION ALL
+    SELECT 'receipt', 'чек', '/rɪˈsiːt/', 'Always ask for a receipt when shopping.' UNION ALL
+    SELECT 'reference number', 'номер заказа', '/ˈref.ər.əns ˌnʌm.bər/', 'Quote your reference number for inquiries.' UNION ALL
+    SELECT 'return', 'возвращать', '/rɪˈtɜːn/', 'You can return items within 30 days.' UNION ALL
+    SELECT 'shipping', 'перевозка груза', '/ˈʃɪp.ɪŋ/', 'Shipping costs depend on weight and distance.' UNION ALL
+    SELECT 'slogan', 'слоган', '/ˈsləʊ.ɡən/', 'The company''s slogan is "Quality First".' UNION ALL
+    SELECT 'special offer', 'специальное предложение', '/ˌspeʃ.əl ˈɒf.ər/', 'This week''s special offer saves you 20%.' UNION ALL
+    SELECT 'stock', 'ассортимент', '/stɒk/', 'The store has limited stock of this item.' UNION ALL
+    SELECT 'stuff', 'вещи', '/stʌf/', 'We bought camping stuff for our trip.' UNION ALL
+    SELECT 'sword', 'меч', '/sɔːd/', 'The museum displayed ancient swords.' UNION ALL
+    SELECT 'tag', 'ярлык', '/tæɡ/', 'The price tag was missing from the dress.' UNION ALL
+    SELECT 'till', 'касса', '/tɪl/', 'Please pay at the till before leaving.' UNION ALL
+    SELECT 'toiletries', 'туалетные принадлежности', '/ˈtɔɪ.lə.triz/', 'Hotel rooms provide basic toiletries.' UNION ALL
+    SELECT 'track', 'отслеживать', '/træk/', 'You can track your online order.' UNION ALL
+    SELECT 'vendor', 'продавец', '/ˈven.dər/', 'Street vendors sell souvenirs to tourists.'
 ) AS data
 WHERE EXISTS (SELECT 1 FROM unit_data);
