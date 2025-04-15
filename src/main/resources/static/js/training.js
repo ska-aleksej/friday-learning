@@ -1,11 +1,13 @@
 // Объявляем переменные в глобальной области видимости
 let words = [];
-let selectedCard = null;
+let leftCard = null;
+let rightCard = null;
 let correctPairs = 0;
 let englishContainer;
 let russianContainer;
 let progressBar;
 let scoreElement;
+let isProcessing = false; // Флаг для блокировки обработки кликов
 
 document.addEventListener('DOMContentLoaded', function() {
     englishContainer = document.getElementById('englishWords');
@@ -52,21 +54,22 @@ function updateScore() {
 }
 
 function displayWords() {
-    // Перемешиваем слова
-    const shuffledWords = [...words].sort(() => Math.random() - 0.5);
-    
+    // Перемешиваем слова для каждого столбца отдельно
+    const shuffledEnglishWords = [...words].sort(() => Math.random() - 0.5);
+    const shuffledRussianWords = [...words].sort(() => Math.random() - 0.5);
+
     // Очищаем контейнеры
     englishContainer.innerHTML = '';
     russianContainer.innerHTML = '';
 
     // Создаем карточки для английских слов
-    shuffledWords.forEach(word => {
+    shuffledEnglishWords.forEach(word => {
         const card = createWordCard(word, true);
         englishContainer.appendChild(card);
     });
 
     // Создаем карточки для русских слов
-    shuffledWords.forEach(word => {
+    shuffledRussianWords.forEach(word => {
         const card = createWordCard(word, false);
         russianContainer.appendChild(card);
     });
@@ -95,67 +98,74 @@ function createWordCard(word, isEnglish) {
 }
 
 function handleCardClick(card, word) {
-    if (card.classList.contains('disabled')) return;
+    // Если карточка отключена или идет обработка предыдущего клика, игнорируем
+    if (card.classList.contains('disabled') || isProcessing) return;
 
     // Если кликнули на уже выбранную карточку, снимаем выделение
-    if (selectedCard === card) {
+    if (leftCard === card) {
         card.classList.remove('selected');
-        selectedCard = null;
+        leftCard = null;
         return;
     }
 
     // Если выбрана карточка в том же столбце, меняем выделение
-    if (selectedCard && 
-        ((card.parentElement === englishContainer && selectedCard.parentElement === englishContainer) ||
-         (card.parentElement === russianContainer && selectedCard.parentElement === russianContainer))) {
-        selectedCard.classList.remove('selected');
-        selectedCard = card;
+    if (leftCard && 
+        ((card.parentElement === englishContainer && leftCard.parentElement === englishContainer) ||
+         (card.parentElement === russianContainer && leftCard.parentElement === russianContainer))) {
+        leftCard.classList.remove('selected');
+        leftCard = card;
         card.classList.add('selected');
         return;
     }
 
-    if (!selectedCard) {
+    if (!leftCard) {
         // Первый выбор
-        selectedCard = card;
+        leftCard = card;
         card.classList.add('selected');
     } else {
         // Второй выбор (только если карточки из разных столбцов)
-        const isCorrect = checkPair(selectedCard, card, word);
+        const isCorrect = checkPair(leftCard, card, word);
         
         if (isCorrect) {
             // Правильная пара
-            selectedCard.classList.add('correct');
+            isProcessing = true; // Блокируем обработку кликов
+            leftCard.classList.add('correct');
             card.classList.add('correct');
-            selectedCard.classList.remove('selected');
+            leftCard.classList.remove('selected');
             card.classList.remove('selected');
             correctPairs++;
             updateScore();
-            
+
             // Через 1 секунду делаем карточки неактивными
             setTimeout(() => {
-                selectedCard.classList.remove('correct');
+                leftCard.classList.remove('correct');
                 card.classList.remove('correct');
-                selectedCard.classList.add('disabled');
+                leftCard.classList.add('disabled');
                 card.classList.add('disabled');
-            }, 1000);
+                leftCard = null;
+                rightCard = null;
+                isProcessing = false; // Разблокируем обработку кликов
+            }, 500);
             
             if (correctPairs === words.length) {
                 setTimeout(() => {
                     loadNewWords();
-                }, 1500);
+                }, 1000);
             }
         } else {
             // Неправильная пара
-            selectedCard.classList.add('incorrect');
+            isProcessing = true; // Блокируем обработку кликов
+            leftCard.classList.add('incorrect');
             card.classList.add('incorrect');
             
             setTimeout(() => {
-                selectedCard.classList.remove('selected', 'incorrect');
-                card.classList.remove('incorrect');
-            }, 1000);
+                leftCard.classList.remove('selected', 'incorrect');
+                card.classList.remove('selected','incorrect');
+                leftCard = null;
+                rightCard = null;
+                isProcessing = false; // Разблокируем обработку кликов
+            }, 500);
         }
-        
-        selectedCard = null;
     }
 }
 
