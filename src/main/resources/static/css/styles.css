@@ -360,12 +360,45 @@ body {
     text-align: center;
     margin: 8px 0;
     border: 1px solid #e0e0e0;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .training-container .word-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     border-color: #2196f3;
+}
+
+.training-container .word-card.selected {
+    border-color: #0900ff; /* Изменяем цвет границы */
+    background-color: #e9e0ff; /* Изменяем цвет фона */
+    transform: scale(1.05); /* Немного увеличиваем размер */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Добавляем тень */
+}
+
+.training-container .word-card.correct {
+    border-color: #4CAF50; /* Зеленая граница для правильных ответов */
+    background-color: #e8f5e9; /* Светло-зеленый фон */
+}
+
+.training-container .word-card.incorrect {
+    border-color: #f44336; /* Красная граница для неправильных ответов */
+    background-color: #ffebee; /* Светло-красный фон */
+}
+
+.training-container .word-card.disabled {
+    opacity: 0.5; /* Полупрозрачность для неактивных карточек */
+    cursor: not-allowed; /* Изменение курсора */
+    pointer-events: none; /* Отключение всех событий указателя */
+}
+
+.training-container .word-card.disabled:hover {
+    transform: none; /* Убираем эффект наведения */
+    box-shadow: none; /* Убираем тень при наведении */
+    border-color: #e0e0e0; /* Возвращаем стандартный цвет границы */
 }
 
 .training-container .word-text {
