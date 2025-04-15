@@ -38,17 +38,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Обработчики кнопок навигации
     document.getElementById('prevButton').addEventListener('click', () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            displayCurrentWord();
-        }
+        navigateToPreviousWord();
     });
 
     document.getElementById('nextButton').addEventListener('click', () => {
-        if (currentIndex < words.length - 1) {
-            currentIndex++;
-            displayCurrentWord();
-        }
+        navigateToNextWord();
     });
 
     // Обработчики для озвучивания
@@ -61,7 +55,41 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentWord = words[currentIndex];
         speakWord(currentWord.exampleSentence);
     });
+
+    // Обработчик клавиш клавиатуры
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft') {
+            navigateToPreviousWord();
+        } else if (event.key === 'ArrowRight') {
+            navigateToNextWord();
+        } else if (event.key === ' ') {
+            // Предотвращаем прокрутку страницы при нажатии пробела
+            event.preventDefault();
+            const currentWord = words[currentIndex];
+            speakWord(currentWord.englishWord);
+        }
+    });
 });
+
+function navigateToPreviousWord() {
+    if (currentIndex === 0) {
+        // Если мы на первом слове, переходим к последнему
+        currentIndex = words.length - 1;
+    } else {
+        currentIndex--;
+    }
+    displayCurrentWord();
+}
+
+function navigateToNextWord() {
+    if (currentIndex === words.length - 1) {
+        // Если мы на последнем слове, переходим к первому
+        currentIndex = 0;
+    } else {
+        currentIndex++;
+    }
+    displayCurrentWord();
+}
 
 function updateScore() {
     const progress = ((currentIndex + 1) / words.length) * 100;
@@ -89,17 +117,7 @@ function updateNavigationButtons() {
     const prevButton = document.getElementById('prevButton');
     const nextButton = document.getElementById('nextButton');
     
-    // Скрываем кнопку "назад" если мы на первом слове
-    if (currentIndex === 0) {
-        prevButton.classList.add('hidden');
-    } else {
-        prevButton.classList.remove('hidden');
-    }
-    
-    // Скрываем кнопку "вперед" если мы на последнем слове
-    if (currentIndex === words.length - 1) {
-        nextButton.classList.add('hidden');
-    } else {
-        nextButton.classList.remove('hidden');
-    }
+    // Кнопки всегда видны, так как навигация циклическая
+    prevButton.classList.remove('hidden');
+    nextButton.classList.remove('hidden');
 } 
