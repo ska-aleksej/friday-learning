@@ -4,6 +4,8 @@
     <title>Тренировка правописания</title>
 </head>
 <body>
+    <header th:replace="~{fragments/header :: header}"></header>
+    
     <div class="container">
         <div class="header-buttons">
             <a th:href="@{/unit/{id}/modes(id=${unit.id})}" class="back-link">Назад к выбору режима</a>
@@ -37,6 +39,7 @@
         </div>
     </div>
 
+    <div th:replace="~{fragments/settings-modal :: settings-modal}"></div>
     <script th:src="@{/js/spelling.js}"></script>
 </body>
 </html> 

@@ -511,6 +511,180 @@ body {
     margin: 10px 0;
 }
 
+/* Стили для хедера */
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header-content h1 {
+    margin: 0;
+    color: #2196f3;
+    font-size: 1.8em;
+}
+
+.settings-button {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.settings-button:hover {
+    color: #2196f3;
+    background-color: #f5f5f5;
+    transform: rotate(30deg);
+}
+
+/* Стили для модального окна */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    margin: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-20px) scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: translateY(0) scale(1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.5em;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    color: #666;
+    cursor: pointer;
+    padding: 5px;
+    line-height: 1;
+}
+
+.close-button:hover {
+    color: #f44336;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.speech-settings {
+    margin-bottom: 20px;
+}
+
+.speech-settings h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.setting-group {
+    margin-bottom: 15px;
+}
+
+.setting-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.setting-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.range-value {
+    display: inline-block;
+    min-width: 40px;
+    text-align: right;
+    color: #666;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Стили для кнопки предпрослушивания */
+.preview-button {
+    background: none;
+    border: none;
+    color: #2196f3;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.preview-button:hover {
+    background-color: #f5f5f5;
+}
+
+.preview-button i {
+    font-size: 1.1em;
+}
+
+.preview-button:active {
+    transform: scale(0.95);
+}
+
 /* Медиа-запросы для адаптивной верстки */
 /* Мобильные устройства (до 480px) */
 @media (max-width: 480px) {
@@ -619,6 +793,23 @@ body {
 
     .score {
         font-size: 16px;
+    }
+
+    .header-content {
+        padding: 10px 15px;
+    }
+
+    .header-content h1 {
+        font-size: 1.5em;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 10px auto;
+    }
+
+    .modal-body {
+        padding: 15px;
     }
 }
 

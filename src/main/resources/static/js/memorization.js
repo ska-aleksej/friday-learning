@@ -109,7 +109,19 @@ function displayCurrentWord() {
 
 function speakWord(text) {
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
+    const settings = window.settingsManager.getSpeechSettings();
+    
+    // Применяем настройки голоса
+    const voices = window.speechSynthesis.getVoices();
+    const selectedVoice = voices.find(v => v.name === settings.voice);
+    if (selectedVoice) {
+        utterance.voice = selectedVoice;
+    }
+    
+    utterance.rate = settings.rate;
+    utterance.pitch = settings.pitch;
+    utterance.volume = settings.volume;
+    
     window.speechSynthesis.speak(utterance);
 }
 
