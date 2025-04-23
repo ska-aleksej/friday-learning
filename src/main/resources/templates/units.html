@@ -4,6 +4,8 @@
     <title th:text="'Level ' + ${level.name} + ' - Choose Unit'">Level A1 - Choose Unit</title>
 </head>
 <body>
+    <header th:replace="~{fragments/header :: header}"></header>
+    
     <div class="container">
         <a href="/" class="back-link">Назад к уровням</a>
         <h1 th:text="'Level ' + ${level.name} + ' Units'">Level A1 Units</h1>
@@ -17,5 +19,7 @@
             </a>
         </div>
     </div>
+
+    <div th:replace="~{fragments/settings-modal :: settings-modal}"></div>
 </body>
 </html> 

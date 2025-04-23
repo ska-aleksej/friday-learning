@@ -4,6 +4,8 @@
     <title>Выбор режима обучения</title>
 </head>
 <body>
+    <header th:replace="~{fragments/header :: header}"></header>
+    
     <div class="container">
         <a th:href="@{/level/{levelId}(levelId=${unit.levelId})}" class="back-link">Назад к списку юнитов</a>
         <h1 th:text="${unit.name}">Название юнита</h1>
@@ -23,5 +25,7 @@
             </a>
         </div>
     </div>
+
+    <div th:replace="~{fragments/settings-modal :: settings-modal}"></div>
 </body>
 </html> 

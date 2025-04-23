@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}">
+    <title>Уровни</title>
+</head>
+<body>
+    <header th:replace="~{fragments/header :: header}"></header>
+    
+    <div class="container">
+        <h1>Choose Your Level</h1>
+        <div class="levels-grid">
+            <a th:each="level : ${levels}" 
+               th:href="@{/level/{id}(id=${level.id})}" 
+               class="level-card">
+                <h2 th:text="${level.name}">Название уровня</h2>
+                <p th:text="${level.description}">Описание уровня</p>
+                <span class="count" th:text="${level.unitsCount + ' юнитов'}">0 юнитов</span>
+            </a>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/settings-modal :: settings-modal}"></div>
+</body>
+</html> 

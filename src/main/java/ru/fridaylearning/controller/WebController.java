@@ -22,7 +22,7 @@ public class WebController {
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("levels", levelService.getAllLevels());
-        return "index";
+        return "levels";
     }
 
     @GetMapping("/level/{levelId}")
