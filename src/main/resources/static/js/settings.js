@@ -6,9 +6,15 @@ class SettingsManager {
             return;
         }
 
+        this.isAndroid = /Android/i.test(navigator.userAgent);
+        this.isChrome = /Chrome/i.test(navigator.userAgent);
+        this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        this.initialized = false;
+
         this.defaultSettings = {
             voice: null,
-            rate: 1.0,
+            rate: this.isIOS ? 0.9 : 1.0, // Для iOS используем более медленную скорость по умолчанию
             pitch: 1.0,
             volume: 1.0
         };
@@ -16,6 +22,25 @@ class SettingsManager {
         this.settings = this.loadSettings();
         this.initEventListeners();
         this.initVoices();
+
+        // Для мобильных устройств добавляем дополнительную инициализацию
+        if ((this.isAndroid && this.isChrome) || this.isIOS) {
+            // Инициализируем при открытии модального окна
+            this.modal.addEventListener('show', () => {
+                if (!this.initialized) {
+                    this.forceInitVoices();
+                }
+            });
+
+            // Для iOS добавляем обработку при взаимодействии
+            if (this.isIOS) {
+                this.modal.addEventListener('touchstart', () => {
+                    if (!this.initialized) {
+                        this.forceInitVoices();
+                    }
+                }, { once: true });
+            }
+        }
     }
 
     initializeElements() {
@@ -69,35 +94,105 @@ class SettingsManager {
         localStorage.setItem('speechSettings', JSON.stringify(this.defaultSettings));
     }
 
+    forceInitVoices() {
+        if (this.initialized) return;
+        
+        console.log('Forcing voices initialization in settings...');
+        const utterance = new SpeechSynthesisUtterance('');
+        utterance.lang = 'en-US';
+        
+        // Пробуем несколько раз получить голоса
+        let attempts = 0;
+        const tryGetVoices = () => {
+            const voices = window.speechSynthesis.getVoices();
+            if (voices.length > 0) {
+                this.initialized = true;
+                this.updateVoiceList(voices);
+                console.log('Settings voices initialized successfully:', voices);
+            } else if (attempts < 5) {
+                attempts++;
+                setTimeout(tryGetVoices, 500);
+            }
+        };
+        
+        window.speechSynthesis.speak(utterance);
+        window.speechSynthesis.cancel();
+        tryGetVoices();
+    }
+
     initVoices() {
         // Получаем голоса сразу, если они доступны
         const voices = window.speechSynthesis.getVoices();
         if (voices.length > 0) {
+            this.initialized = true;
             this.updateVoiceList(voices);
         }
 
         // Подписываемся на событие изменения голосов
         window.speechSynthesis.onvoiceschanged = () => {
             const voices = window.speechSynthesis.getVoices();
-            this.updateVoiceList(voices);
+            if (voices.length > 0) {
+                this.initialized = true;
+                console.log('Voices changed in settings:', voices);
+                this.updateVoiceList(voices);
+            }
         };
     }
 
     updateVoiceList(voices) {
         const englishVoices = voices.filter(voice => voice.lang.startsWith('en'));
+        console.log('Available English voices in settings:', englishVoices);
+
         if (englishVoices.length > 0) {
-            this.voiceSelect.innerHTML = englishVoices
-                .map(voice => `
-                    <option value="${voice.name}" 
-                            ${voice.name === this.settings.voice ? 'selected' : ''}>
-                        ${voice.name}
-                    </option>
-                `).join('');
-            
-            // Если голос не выбран, выбираем первый доступный
-            if (!this.settings.voice && this.voiceSelect.value) {
-                this.settings.voice = this.voiceSelect.value;
-                this.saveSettings();
+            // Для iOS используем специальную обработку
+            if (this.isIOS) {
+                // На iOS часто доступен только один голос
+                const availableVoice = englishVoices[0];
+                if (availableVoice) {
+                    this.voiceSelect.innerHTML = `
+                        <option value="${availableVoice.name}" selected>
+                            ${availableVoice.name} (iOS Voice)
+                        </option>
+                    `;
+                    this.settings.voice = availableVoice.name;
+                    this.saveSettings();
+                    // Скрываем выбор голоса на iOS
+                    this.voiceSelect.parentElement.style.display = 'none';
+                }
+            } else {
+                // Стандартная обработка для других платформ
+                const currentValue = this.voiceSelect.value;
+                this.voiceSelect.innerHTML = englishVoices
+                    .map(voice => `
+                        <option value="${voice.name}" 
+                                ${voice.name === (this.settings.voice || currentValue) ? 'selected' : ''}>
+                            ${voice.name} (${voice.lang})
+                        </option>
+                    `).join('');
+
+                if (!this.settings.voice || !englishVoices.find(v => v.name === this.settings.voice)) {
+                    this.settings.voice = this.voiceSelect.value;
+                    this.saveSettings();
+                }
+            }
+
+            // Для Android Chrome добавляем специальную обработку
+            if (this.isAndroid && this.isChrome) {
+                // Удаляем старые обработчики
+                const newSelect = this.voiceSelect.cloneNode(true);
+                this.voiceSelect.parentNode.replaceChild(newSelect, this.voiceSelect);
+                this.voiceSelect = newSelect;
+
+                // Добавляем новый обработчик
+                this.voiceSelect.addEventListener('change', () => {
+                    const selectedVoice = englishVoices.find(v => v.name === this.voiceSelect.value);
+                    if (selectedVoice) {
+                        this.settings.voice = selectedVoice.name;
+                        this.saveSettings();
+                        // Не запускаем предпрослушивание автоматически
+                        console.log('Voice changed to:', selectedVoice.name);
+                    }
+                });
             }
         }
     }
@@ -117,23 +212,63 @@ class SettingsManager {
     }
 
     previewVoice() {
+        if (!this.initialized && (this.isAndroid && this.isChrome || this.isIOS)) {
+            this.forceInitVoices();
+            return;
+        }
+
         const utterance = new SpeechSynthesisUtterance('Hello, this is a preview of the selected voice.');
         const voices = window.speechSynthesis.getVoices();
-        const selectedVoice = voices.find(v => v.name === this.voiceSelect.value);
-        
-        if (selectedVoice) {
-            utterance.voice = selectedVoice;
+
+        // Для iOS используем первый доступный голос
+        if (this.isIOS) {
+            const availableVoice = voices[0];
+            if (availableVoice) {
+                utterance.voice = availableVoice;
+                console.log('Preview with iOS voice:', availableVoice.name);
+            }
+        } else {
+            const selectedVoice = voices.find(v => v.name === this.voiceSelect.value);
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
+                console.log('Preview with voice:', selectedVoice.name);
+            }
         }
         
-        utterance.rate = parseFloat(this.rateRange.value) || 1.0;
+        utterance.lang = 'en-US';
+        // Для iOS ограничиваем скорость
+        utterance.rate = this.isIOS ? Math.min(parseFloat(this.rateRange.value) || 1.0, 1.0) : parseFloat(this.rateRange.value) || 1.0;
         utterance.pitch = parseFloat(this.pitchRange.value) || 1.0;
         utterance.volume = parseFloat(this.volumeRange.value) || 1.0;
+
+        // Добавляем обработчики для отладки
+        utterance.onstart = () => console.log('Preview started');
+        utterance.onend = () => {
+            console.log('Preview ended');
+            // Для iOS очищаем очередь после окончания
+            if (this.isIOS) {
+                window.speechSynthesis.cancel();
+            }
+        };
+        utterance.onerror = (event) => {
+            console.error('Preview error:', event);
+            // Для iOS пробуем переинициализировать при ошибке
+            if (this.isIOS && !this.initialized) {
+                this.forceInitVoices();
+            }
+        };
         
         // Останавливаем предыдущее воспроизведение
         window.speechSynthesis.cancel();
         
-        // Воспроизводим новый голос
-        window.speechSynthesis.speak(utterance);
+        // Для iOS добавляем небольшую задержку
+        if (this.isIOS) {
+            setTimeout(() => {
+                window.speechSynthesis.speak(utterance);
+            }, 50);
+        } else {
+            window.speechSynthesis.speak(utterance);
+        }
     }
 
     initEventListeners() {
