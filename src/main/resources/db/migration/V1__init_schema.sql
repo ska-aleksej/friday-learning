@@ -1,7 +1,7 @@
 -- Таблица уровней языка
 CREATE TABLE levels (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(2) NOT NULL UNIQUE,  -- A1, A2, PI, B1, B2, C1, C2
+    name VARCHAR(3) NOT NULL UNIQUE,  -- A1, A2, PI, B1, B1+, B2, C1, C2
     description VARCHAR(500),
     display_order INT NOT NULL,       -- для правильного порядка отображения
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
@@ -24,9 +24,9 @@ CREATE TABLE units (
 CREATE TABLE words (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     unit_id BIGINT NOT NULL,
-    english_word VARCHAR(100) NOT NULL,
-    russian_translation VARCHAR(100) NOT NULL,
-    transcription VARCHAR(100),
+    english_word VARCHAR(200) NOT NULL,
+    russian_translation VARCHAR(200) NOT NULL,
+    transcription VARCHAR(200),
     example_sentence VARCHAR(500),    -- пример использования
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),

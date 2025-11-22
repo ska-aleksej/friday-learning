@@ -15,13 +15,13 @@ public class Word {
     @JoinColumn(name = "unit_id", nullable = false)
     private Unit unit;
 
-    @Column(name = "english_word", length = 100, nullable = false)
+    @Column(name = "english_word", length = 200, nullable = false)
     private String englishWord;
 
-    @Column(name = "russian_translation", length = 100, nullable = false)
+    @Column(name = "russian_translation", length = 200, nullable = false)
     private String russianTranslation;
 
-    @Column(name = "transcription", length = 100)
+    @Column(name = "transcription", length = 200)
     private String transcription;
 
     @Column(name = "example_sentence", length = 500)
