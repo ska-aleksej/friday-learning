@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Обработчик кнопки озвучивания
     document.getElementById('speakButton').addEventListener('click', () => {
         const currentWord = words[currentIndex];
-        speakWord(currentWord.englishWord);
+        speechService.speak(currentWord.englishWord);
     });
 
     // Обработчик кнопки проверки
@@ -135,18 +135,6 @@ function checkAnswer() {
         resultMessage.textContent = `Неправильно. Правильный ответ: ${correctAnswer}`;
         resultMessage.className = 'result-message incorrect';
         firstAttempt = false; // Отмечаем, что это не первая попытка
-    }
-}
-
-function speakWord(word) {
-    if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(word);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.8; // Немного замедляем произношение
-        speechSynthesis.speak(utterance);
-    } else {
-        resultMessage.textContent = 'Ваш браузер не поддерживает озвучивание';
-        resultMessage.className = 'result-message incorrect';
     }
 }
 

@@ -86,7 +86,7 @@ function createWordCard(word, isEnglish) {
         // Добавляем озвучивание для английских слов
         card.addEventListener('click', () => {
             if (!card.classList.contains('disabled')) {
-                speakWord(word.englishWord);
+                speechService.speak(word.englishWord);
             }
         });
     } else {
@@ -179,12 +179,6 @@ function checkPair(card1, card2, word) {
     const wordId2 = card2.dataset.wordId;
     
     return wordId1 === wordId2;
-}
-
-function speakWord(text) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
-    window.speechSynthesis.speak(utterance);
 }
 
 // Добавим функцию для загрузки новых слов
