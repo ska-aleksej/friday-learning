@@ -16,7 +16,6 @@ public class LevelRequestDto {
     @NotNull(message = "Display order is required")
     private Integer displayOrder;
 
-    // Геттеры и сеттеры
     public String getName() {
         return name;
     }

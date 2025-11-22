@@ -17,7 +17,6 @@ public class ErrorResponseDto {
         this.path = path;
     }
 
-    // Геттеры и сеттеры
     public LocalDateTime getTimestamp() {
         return timestamp;
     }

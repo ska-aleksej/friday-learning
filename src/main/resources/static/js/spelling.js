@@ -5,7 +5,7 @@ let progressBar;
 let scoreElement;
 let wordInput;
 let resultMessage;
-let firstAttempt = true; // Флаг для отслеживания первой попытки
+let firstAttempt = true;
 
 document.addEventListener('DOMContentLoaded', function() {
     progressBar = document.getElementById('progressBar');
@@ -21,24 +21,19 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    // Загрузка случайных слов
     loadWords(unitId);
 
-    // Обработчик кнопки озвучивания
     document.getElementById('speakButton').addEventListener('click', () => {
         const currentWord = words[currentIndex];
         speechService.speak(currentWord.englishWord);
     });
 
-    // Обработчик кнопки проверки
     document.getElementById('checkButton').addEventListener('click', checkAnswer);
 
-    // Обработчик кнопки нового набора
     document.getElementById('newSetButton').addEventListener('click', () => {
         loadNewWords(unitId);
     });
 
-    // Обработчик нажатия Enter в поле ввода
     wordInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             checkAnswer();
@@ -95,7 +90,7 @@ function displayCurrentWord() {
     wordInput.value = '';
     resultMessage.textContent = '';
     resultMessage.className = 'result-message';
-    firstAttempt = true; // Сбрасываем флаг первой попытки для нового слова
+    firstAttempt = true;
     wordInput.focus();
 }
 
@@ -107,24 +102,20 @@ function checkAnswer() {
     if (userAnswer === correctAnswer) {
         resultMessage.textContent = 'Правильно!';
         resultMessage.className = 'result-message correct';
-        
-        // Увеличиваем счетчик только если это первая попытка
+
         if (firstAttempt) {
             correctAnswers++;
             updateScore();
         }
-        
-        // Автоматически переходим к следующему слову через 1 секунду
+
         setTimeout(() => {
             currentIndex++;
             if (currentIndex < words.length) {
                 displayCurrentWord();
             } else {
-                // Если все слова пройдены, загружаем новый набор
                 resultMessage.textContent = `Набор завершен! Правильных ответов: ${correctAnswers}/${words.length}`;
                 resultMessage.className = 'result-message';
-                
-                // Загружаем новый набор через 2 секунды
+
                 setTimeout(() => {
                     const unitId = document.querySelector('.unit-info').getAttribute('data-unit-id');
                     loadNewWords(unitId);
@@ -134,7 +125,7 @@ function checkAnswer() {
     } else {
         resultMessage.textContent = `Неправильно. Правильный ответ: ${correctAnswer}`;
         resultMessage.className = 'result-message incorrect';
-        firstAttempt = false; // Отмечаем, что это не первая попытка
+        firstAttempt = false;
     }
 }
 

@@ -56,8 +56,7 @@ class SpeechService {
         console.log('Forcing voices initialization...');
         const utterance = new SpeechSynthesisUtterance('');
         utterance.lang = 'en-US';
-        
-        // Пробуем несколько раз получить голоса
+
         let attempts = 0;
         const tryGetVoices = () => {
             const voices = this.synth.getVoices();
@@ -66,8 +65,7 @@ class SpeechService {
                 this.voicesLoaded = true;
                 this.initialized = true;
                 console.log('Voices initialized successfully:', voices);
-                
-                // Обновляем настройки, если они есть
+
                 if (window.settingsManager) {
                     window.settingsManager.updateVoiceList(voices);
                 }

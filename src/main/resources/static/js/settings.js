@@ -1,6 +1,5 @@
 class SettingsManager {
     constructor() {
-        // Проверяем, есть ли необходимые элементы на странице
         if (!this.initializeElements()) {
             console.log('Settings elements not found on this page');
             return;
@@ -44,7 +43,6 @@ class SettingsManager {
     }
 
     initializeElements() {
-        // Получаем все необходимые элементы
         this.modal = document.getElementById('settingsModal');
         this.settingsButton = document.getElementById('settingsButton');
         this.closeButton = document.getElementById('closeSettings');
@@ -59,7 +57,6 @@ class SettingsManager {
         this.pitchValue = document.getElementById('pitchValue');
         this.volumeValue = document.getElementById('volumeValue');
 
-        // Проверяем наличие всех необходимых элементов
         return this.modal && this.settingsButton && this.closeButton && 
                this.saveButton && this.resetButton && this.previewButton && 
                this.voiceSelect && this.rateRange && this.pitchRange && 
@@ -70,7 +67,6 @@ class SettingsManager {
     loadSettings() {
         const savedSettings = localStorage.getItem('speechSettings');
         if (!savedSettings) {
-            // Если настроек нет, сохраняем значения по умолчанию
             localStorage.setItem('speechSettings', JSON.stringify(this.defaultSettings));
             return this.defaultSettings;
         }
@@ -100,8 +96,7 @@ class SettingsManager {
         console.log('Forcing voices initialization in settings...');
         const utterance = new SpeechSynthesisUtterance('');
         utterance.lang = 'en-US';
-        
-        // Пробуем несколько раз получить голоса
+
         let attempts = 0;
         const tryGetVoices = () => {
             const voices = window.speechSynthesis.getVoices();
@@ -121,14 +116,12 @@ class SettingsManager {
     }
 
     initVoices() {
-        // Получаем голоса сразу, если они доступны
         const voices = window.speechSynthesis.getVoices();
         if (voices.length > 0) {
             this.initialized = true;
             this.updateVoiceList(voices);
         }
 
-        // Подписываемся на событие изменения голосов
         window.speechSynthesis.onvoiceschanged = () => {
             const voices = window.speechSynthesis.getVoices();
             if (voices.length > 0) {
@@ -313,7 +306,6 @@ class SettingsManager {
     }
 }
 
-// Инициализация менеджера настроек
 document.addEventListener('DOMContentLoaded', () => {
     window.settingsManager = new SettingsManager();
 }); 

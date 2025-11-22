@@ -35,11 +35,9 @@ public class Unit {
     @OneToMany(mappedBy = "unit", cascade = CascadeType.ALL)
     private List<Word> words = new ArrayList<>();
 
-    // Конструкторы
     public Unit() {
     }
 
-    // Геттеры и сеттеры
     public Long getId() {
         return id;
     }

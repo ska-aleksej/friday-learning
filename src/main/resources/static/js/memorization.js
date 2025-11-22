@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    // Загрузка всех слов юнита
     fetch(`/api/words/unit/${unitId}/all`)
         .then(response => {
             if (!response.ok) {
@@ -36,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error loading words:', error);
         });
 
-    // Обработчики кнопок навигации
     document.getElementById('prevButton').addEventListener('click', () => {
         navigateToPreviousWord();
     });
@@ -45,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function() {
         navigateToNextWord();
     });
 
-    // Обработчики для озвучивания
     document.getElementById('speakWord').addEventListener('click', () => {
         const currentWord = words[currentIndex];
         speechService.speak(currentWord.englishWord);
@@ -56,14 +53,12 @@ document.addEventListener('DOMContentLoaded', function() {
         speechService.speak(currentWord.exampleSentence);
     });
 
-    // Обработчик клавиш клавиатуры
     document.addEventListener('keydown', (event) => {
         if (event.key === 'ArrowLeft') {
             navigateToPreviousWord();
         } else if (event.key === 'ArrowRight') {
             navigateToNextWord();
         } else if (event.key === ' ') {
-            // Предотвращаем прокрутку страницы при нажатии пробела
             event.preventDefault();
             const currentWord = words[currentIndex];
             speechService.speak(currentWord.englishWord);
@@ -73,7 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function navigateToPreviousWord() {
     if (currentIndex === 0) {
-        // Если мы на первом слове, переходим к последнему
         currentIndex = words.length - 1;
     } else {
         currentIndex--;
@@ -83,7 +77,6 @@ function navigateToPreviousWord() {
 
 function navigateToNextWord() {
     if (currentIndex === words.length - 1) {
-        // Если мы на последнем слове, переходим к первому
         currentIndex = 0;
     } else {
         currentIndex++;
@@ -104,14 +97,4 @@ function displayCurrentWord() {
     document.getElementById('russianWord').textContent = word.russianTranslation;
     document.getElementById('example').textContent = word.exampleSentence;
     updateScore();
-    updateNavigationButtons();
 }
-
-function updateNavigationButtons() {
-    const prevButton = document.getElementById('prevButton');
-    const nextButton = document.getElementById('nextButton');
-    
-    // Кнопки всегда видны, так как навигация циклическая
-    prevButton.classList.remove('hidden');
-    nextButton.classList.remove('hidden');
-} 

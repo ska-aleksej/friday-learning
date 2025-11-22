@@ -33,11 +33,9 @@ public class Word {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // Конструкторы
     public Word() {
     }
 
-    // Геттеры и сеттеры
     public Long getId() {
         return id;
     }

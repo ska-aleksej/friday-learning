@@ -27,20 +27,16 @@ class WordGame {
     }
 
     renderWords() {
-        // Clear containers
         this.englishWordsContainer.innerHTML = '';
         this.russianWordsContainer.innerHTML = '';
 
-        // Shuffle words
         const shuffledRussian = [...this.currentWords].sort(() => Math.random() - 0.5);
 
-        // Render English words
         this.currentWords.forEach(word => {
             const button = this.createWordButton(word.englishWord, 'english');
             this.englishWordsContainer.appendChild(button);
         });
 
-        // Render Russian words
         shuffledRussian.forEach(word => {
             const button = this.createWordButton(word.russianTranslation, 'russian');
             this.russianWordsContainer.appendChild(button);
@@ -78,7 +74,6 @@ class WordGame {
             return;
         }
 
-        // Check if pair is correct
         const isCorrect = this.checkPair(this.selectedWord, { button, text, type });
         
         if (isCorrect) {
@@ -88,7 +83,6 @@ class WordGame {
             this.score += 10;
             this.scoreElement.textContent = this.score;
 
-            // Check if all words are matched
             if (this.checkAllMatched()) {
                 setTimeout(() => this.loadWords(), 1000);
             }
@@ -121,7 +115,6 @@ class WordGame {
     }
 }
 
-// Initialize game when page loads
 document.addEventListener('DOMContentLoaded', () => {
     const game = new WordGame(unitId);
 }); 

@@ -13,7 +13,6 @@ public class WordResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // Геттеры и сеттеры
     public Long getId() {
         return id;
     }

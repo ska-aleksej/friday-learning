@@ -23,7 +23,6 @@ public class WordRequestDto {
     @Size(max = 500, message = "Example sentence cannot exceed 500 characters")
     private String exampleSentence;
 
-    // Геттеры и сеттеры
     public Long getUnitId() {
         return unitId;
     }
