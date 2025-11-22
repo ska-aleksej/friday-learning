@@ -13,7 +13,7 @@ public class Level {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", length = 2, nullable = false, unique = true)
+    @Column(name = "name", length = 3, nullable = false, unique = true)
     private String name;
 
     @Column(name = "description", length = 500)
