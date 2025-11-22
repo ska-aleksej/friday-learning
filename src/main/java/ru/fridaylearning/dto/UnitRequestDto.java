@@ -19,7 +19,6 @@ public class UnitRequestDto {
     @NotNull(message = "Display order is required")
     private Integer displayOrder;
 
-    // Геттеры и сеттеры
     public Long getLevelId() {
         return levelId;
     }

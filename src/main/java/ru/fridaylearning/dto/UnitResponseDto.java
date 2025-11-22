@@ -13,7 +13,6 @@ public class UnitResponseDto {
     private LocalDateTime updatedAt;
     private int wordsCount;
 
-    // Геттеры и сеттеры
     public Long getId() {
         return id;
     }

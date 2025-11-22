@@ -11,7 +11,6 @@ public class LevelResponseDto {
     private LocalDateTime updatedAt;
     private int unitsCount;
 
-    // Геттеры и сеттеры
     public Long getId() {
         return id;
     }

@@ -31,11 +31,9 @@ public class Level {
     @OneToMany(mappedBy = "level", cascade = CascadeType.ALL)
     private List<Unit> units = new ArrayList<>();
 
-    // Конструкторы
     public Level() {
     }
 
-    // Геттеры и сеттеры
     public Long getId() {
         return id;
     }
