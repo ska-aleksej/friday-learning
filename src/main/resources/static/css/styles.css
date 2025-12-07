@@ -889,4 +889,28 @@ input[type="range"] {
         padding: 30px;
         min-height: 160px;
     }
+}
+
+/* Стили для кнопки сохранения в настройках */
+#saveSettings:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#saveSettings.highlight {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    }
 } 
